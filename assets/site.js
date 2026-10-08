@@ -55,7 +55,7 @@
     const S = dil === 'tr' ? TR : EN;
     $$('[data-i]').forEach((el) => { const v = S[el.dataset.i] ?? EN[el.dataset.i]; if (v != null) el.textContent = v; });
     document.documentElement.lang = dil;
-    $('#lang').textContent = dil === 'tr' ? 'EN' : 'TR';
+    $('#lang').innerHTML = dil === 'tr' ? '<b>TR</b><i>EN</i>' : '<i>TR</i><b>EN</b>';
     $$('.glitch').forEach((g) => { g.dataset.text = g.textContent; });
     $$('.choice').forEach((b, i) => { b.dataset.cueNow = dil === 'tr' ? CUE_TR[i] : b.dataset.cue; });
     const on = $('.choice.on'); if (on) $('#cueText').textContent = on.dataset.cueNow;

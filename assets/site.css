@@ -331,3 +331,6 @@ svg { fill: currentColor; }
 }
 .lab-note2 { display: none; font: 500 .62rem var(--mono); letter-spacing: .18em; color: var(--dim); margin-top: 16px; }
 @media (max-width: 560px) { .lab-note2 { display: block; } }
+.lang { display: inline-flex; gap: 6px; }
+.lang i { font-style: normal; opacity: .45; }
+.lang b { color: var(--red); font-weight: 600; }
