@@ -1,324 +1,295 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karayel Games | Independent Game Development Studio</title>
-    <style>
-        :root {
-            --bg-deep: #020617;
-            --bg-card: rgba(15, 23, 42, 0.75);
-            --accent-blue: #38bdf8;
-            --accent-glow: rgba(56, 189, 248, 0.25);
-            --border-color: rgba(255, 255, 255, 0.08);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background-color: var(--bg-deep);
-            color: var(--text-main);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            min-height: 100vh;
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* Sinematik Arka Plan Işık Efekti */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 1000px;
-            height: 450px;
-            background: radial-gradient(circle, rgba(37, 99, 235, 0.18) 0%, rgba(2, 6, 23, 0) 70%);
-            z-index: -1;
-        }
-
-        header {
-            text-align: center;
-            padding: 100px 20px 60px 20px;
-            max-width: 900px;
-        }
-
-        .studio-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            color: var(--accent-blue);
-            background: rgba(56, 189, 248, 0.08);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            padding: 8px 18px;
-            border-radius: 30px;
-            margin-bottom: 25px;
-            font-weight: 600;
-        }
-
-        h1 {
-            font-size: 3.8rem;
-            margin-bottom: 20px;
-            letter-spacing: 6px;
-            font-weight: 900;
-            background: linear-gradient(135deg, #ffffff 30%, #64748b 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .vision {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            line-height: 1.8;
-            max-width: 750px;
-            margin: 0 auto;
-        }
-
-        .container {
-            max-width: 1200px;
-            width: 90%;
-            margin-bottom: 100px;
-        }
-
-        .section-title {
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 35px;
-            color: #64748b;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        .card {
-            background-color: var(--bg-card);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(56, 189, 248, 0.4);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px var(--accent-glow);
-        }
-
-        /* Video/Medya Alanı */
-        .card-media {
-            width: 100%;
-            height: 200px;
-            background: #090d16;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-bottom: 1px solid var(--border-color);
-            overflow: hidden;
-        }
-
-        .card-media iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .media-placeholder {
-            color: #475569;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        .card-content {
-            padding: 30px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .platform-tag {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            background: rgba(30, 41, 59, 0.8);
-            color: var(--accent-blue);
-            padding: 5px 12px;
-            border-radius: 6px;
-            font-weight: 700;
-            align-self: flex-start;
-            margin-bottom: 15px;
-        }
-
-        .card h3 {
-            margin: 0 0 12px 0;
-            font-size: 1.5rem;
-            color: #ffffff;
-            font-weight: 700;
-        }
-
-        .card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.7;
-            margin-bottom: 25px;
-            flex-grow: 1;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 12px;
-            margin-top: auto;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-align: center;
-            transition: all 0.2s ease;
-            display: inline-block;
-            flex: 1;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-        }
-
-        .btn:hover {
-            opacity: 0.92;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
-        }
-
-        .btn-alt {
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: none;
-        }
-
-        .btn-alt:hover {
-            background: rgba(51, 65, 85, 0.9);
-            box-shadow: none;
-        }
-
-        footer {
-            margin-top: auto;
-            padding: 50px 20px;
-            text-align: center;
-            color: #475569;
-            font-size: 0.9rem;
-            border-top: 1px solid var(--border-color);
-            width: 100%;
-            background: rgba(2, 6, 23, 0.8);
-        }
-
-        footer a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        footer a:hover {
-            color: var(--accent-blue);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Karayel Games — Interactive Film Studio</title>
+<meta name="description" content="Karayel Games is an Istanbul-based interactive film studio. We build full-motion-video games with real actors and real locations — and we are building the tools to direct real characters in the real world.">
+<meta name="theme-color" content="#060608">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Karayel Games — Cinema you play. Reality you direct.">
+<meta property="og:description" content="Interactive film studio from Istanbul. FMV games with real actors, real locations and branching stories.">
+<meta property="og:image" content="https://karayelgames.me/assets/img/hero-poster.jpg">
+<meta property="og:url" content="https://karayelgames.me/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23060608'/%3E%3Cpath d='M18 14v36M18 32 44 14M24 28l22 22' stroke='%23ff4d3d' stroke-width='6' stroke-linecap='round' fill='none'/%3E%3Ccircle cx='48' cy='16' r='4' fill='%2338e1ff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/img/hero-poster.jpg">
+<link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
 
-    <header>
-        <div class="studio-badge">
-            <span style="width: 8px; height: 8px; background: #38bdf8; border-radius: 50%; display: inline-block; box-shadow: 0 0 10px #38bdf8;"></span>
-            Independent Game Studio
-        </div>
-        <h1>KARAYEL GAMES</h1>
-        <p class="vision">
-            Bridging the gap between gaming and reality. We dissolve traditional simulation boundaries, presenting immersive narratives, tactical survival mechanics, and deep psychological puzzles through the lens of interactive art.
-        </p>
-    </header>
+<div class="grain" aria-hidden="true"></div>
 
-    <div class="container">
-        <div class="section-title">Released Titles & Projects</div>
-        <div class="grid">
-            
-            <!-- Half Dead -->
-            <div class="card">
-                <div class="card-media">
-                    <span class="media-placeholder">Half Dead : Trailer Preview</span>
-                    <!-- İleride buraya oyunun Youtube video embed kodunu koyabilirsin: 
-                    <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe> -->
-                </div>
-                <div class="card-content">
-                    <span class="platform-tag">Steam &bull; PC</span>
-                    <h3>Half Dead: A Zombie Story</h3>
-                    <p>A tense post-apocalyptic survival thriller where scarce resources, atmospheric dread, and critical choices dictate your survival in a desolate wasteland.</p>
-                    <div class="btn-group">
-                        <a href="https://store.steampowered.com/app/3698440/Half_Dead_A_Zombie_Story_Game" target="_blank" class="btn">View on Steam</a>
-                    </div>
-                </div>
-            </div>
+<!-- ===== NAV ===== -->
+<header class="nav" id="nav">
+  <a class="logo" href="#top" aria-label="Karayel Games">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M18 14v36M18 32 44 14M24 28l22 22" stroke="currentColor" stroke-width="6" stroke-linecap="round" fill="none"/><circle cx="48" cy="16" r="4" class="logo-dot"/></svg>
+    <span>KARAYEL<em>GAMES</em></span>
+  </a>
+  <nav class="links">
+    <a href="#studio" data-i="nav.studio">Studio</a>
+    <a href="#games" data-i="nav.games">Games</a>
+    <a href="#lab" data-i="nav.lab">Reality Lab</a>
+    <a href="#roadmap" data-i="nav.road">Roadmap</a>
+    <a href="#contact" data-i="nav.contact">Contact</a>
+  </nav>
+  <div class="nav-r">
+    <button class="lang" id="lang" aria-label="Language">TR</button>
+    <a class="btn btn-sm btn-red" href="mailto:info@karayelgames.me" data-i="nav.cta">Work with us</a>
+    <button class="burger" id="burger" aria-label="Menu"><i></i><i></i></button>
+  </div>
+</header>
 
-            <!-- CRYPTEX -->
-            <div class="card">
-                <div class="card-media">
-                    <span class="media-placeholder">Cryptex : Gameplay Teaser</span>
-                </div>
-                <div class="card-content">
-                    <span class="platform-tag">Steam &bull; PC</span>
-                    <h3>CRYPTEX</h3>
-                    <p>An intricate, multi-layered puzzle experience engineered to test high-level intellect, logic deduction, and the decoding of deeply hidden corporate mysteries.</p>
-                    <div class="btn-group">
-                        <a href="https://store.steampowered.com/app/1378700/CRYPTEX" target="_blank" class="btn">View on Steam</a>
-                    </div>
-                </div>
-            </div>
+<!-- ===== HERO ===== -->
+<section class="hero" id="top">
+  <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="auto" poster="assets/img/hero-poster.jpg">
+    <source src="assets/video/hero.mp4" type="video/mp4">
+  </video>
+  <div class="hero-shade"></div>
+  <div class="scan" aria-hidden="true"></div>
 
-            <!-- Full Dead Mobile -->
-            <div class="card">
-                <div class="card-media">
-                    <span class="media-placeholder">Full Dead : Mobile Showcase</span>
-                </div>
-                <div class="card-content">
-                    <span class="platform-tag">iOS & Android &bull; Mobile</span>
-                    <h3>Full Dead: Bir Zombi Hikayesi</h3>
-                    <p>Take the gritty survival narrative anywhere you go. Fully optimized mobile survival experience engineered for smooth performance across both iOS and Android ecosystems.</p>
-                    <div class="btn-group">
-                        <a href="https://apps.apple.com/tr/app/full-dead-bir-zombi-hikayesi/id6762521511" target="_blank" class="btn btn-alt">App Store</a>
-                        <a href="https://play.google.com/store/apps/details?id=com.halfdead.game" target="_blank" class="btn">Google Play</a>
-                    </div>
-                </div>
-            </div>
+  <!-- camera HUD -->
+  <div class="hud" aria-hidden="true">
+    <span class="hud-c tl"></span><span class="hud-c tr"></span><span class="hud-c bl"></span><span class="hud-c br"></span>
+    <div class="hud-top"><span class="rec"><b></b>REC</span><span id="tc">00:00:00:00</span></div>
+    <div class="hud-bot"><span>ISO 800 · 24 FPS · 4K</span><span>CAM A — POV</span></div>
+  </div>
 
-        </div>
+  <div class="hero-in">
+    <div class="eyebrow reveal"><span class="pulse"></span><span data-i="hero.eye">Interactive Film Studio · Istanbul</span></div>
+    <h1 class="hero-h reveal">
+      <span class="line"><span data-i="hero.h1">Cinema you</span> <span class="glitch" data-text="play." data-i="hero.w">play.</span></span>
+      <span class="line grad"><span data-i="hero.h2">Reality you direct.</span></span>
+    </h1>
+    <p class="hero-p reveal" data-i="hero.p">We shoot real actors in real streets and let you decide what happens next. Full-motion video games today — tools to direct real characters in the real world tomorrow.</p>
+    <div class="hero-cta reveal">
+      <button class="btn btn-red" data-video="assets/video/cryptex-trailer.mp4" data-title="CRYPTEX — Trailer"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span data-i="hero.reel">Watch the reel</span></button>
+      <a class="btn btn-ghost" href="#games" data-i="hero.games">Explore our games</a>
+    </div>
+  </div>
+
+  <a class="scroll-cue" href="#studio" aria-label="Scroll"><span></span></a>
+</section>
+
+<!-- ===== TICKER ===== -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-t">
+    <span>FULL MOTION VIDEO</span><i>✦</i><span>POV CINEMATOGRAPHY</span><i>✦</i><span>REAL ACTORS</span><i>✦</i><span>REAL LOCATIONS</span><i>✦</i><span>BRANCHING STORY</span><i>✦</i><span>MULTIPLE ENDINGS</span><i>✦</i><span>LIVE DIRECTION</span><i>✦</i>
+    <span>FULL MOTION VIDEO</span><i>✦</i><span>POV CINEMATOGRAPHY</span><i>✦</i><span>REAL ACTORS</span><i>✦</i><span>REAL LOCATIONS</span><i>✦</i><span>BRANCHING STORY</span><i>✦</i><span>MULTIPLE ENDINGS</span><i>✦</i><span>LIVE DIRECTION</span><i>✦</i>
+  </div>
+</div>
+
+<!-- ===== STUDIO / MANIFESTO ===== -->
+<section class="sec studio" id="studio">
+  <div class="wrap">
+    <div class="kicker reveal">01 — <span data-i="st.k">The studio</span></div>
+    <h2 class="h2 reveal"><span data-i="st.h1">The line between a film and a game</span> <span class="hl" data-i="st.h2">is a choice.</span></h2>
+    <div class="studio-grid">
+      <p class="lead reveal" data-i="st.p1">Karayel Games is an independent interactive film studio. We write branching scripts, shoot them on real locations with real performers, and turn every scene into a decision the player owns.</p>
+      <p class="lead dim reveal" data-i="st.p2">Our name comes from the karayel — the north-west wind of Istanbul. It changes direction without warning. So do our stories.</p>
     </div>
 
-    <footer>
-        <p>&copy; 2026 Karayel Games. All rights reserved. &bull; <a href="mailto:info@karayelgames.me">info@karayelgames.me</a></p>
-    </footer>
+    <div class="stats">
+      <div class="stat reveal"><b data-count="2">0</b><span data-i="st.s1">titles shipped</span></div>
+      <div class="stat reveal"><b data-count="6">0</b><span data-i="st.s2">endings in CRYPTEX</span></div>
+      <div class="stat reveal"><b data-count="4">0</b><span data-i="st.s3">platforms · PC · iOS · Android</span></div>
+      <div class="stat reveal"><b>∞</b><span data-i="st.s4">ways a scene can go</span></div>
+    </div>
 
+    <!-- Drawn ↔ Filmed comparison -->
+    <div class="compare reveal" id="compare" aria-label="Drawn versus filmed">
+      <img src="assets/img/cx_5.webp" alt="CRYPTEX — live-action POV scene" loading="lazy">
+      <div class="compare-top"><img src="assets/img/hd_10.webp" alt="Half Dead — illustrated cinematic scene" loading="lazy"></div>
+      <div class="compare-bar"><span><svg viewBox="0 0 24 24"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span></div>
+      <em class="tag tag-l" data-i="cmp.l">DRAWN · Half Dead</em>
+      <em class="tag tag-r" data-i="cmp.r">FILMED · CRYPTEX</em>
+    </div>
+    <p class="cap reveal" data-i="cmp.cap">Drag to move between our two languages: illustrated cinema and live-action FMV. Both end in the same place — a choice.</p>
+  </div>
+</section>
+
+<!-- ===== GAMES ===== -->
+<section class="sec games" id="games">
+  <div class="wrap">
+    <div class="kicker reveal">02 — <span data-i="g.k">Games</span></div>
+    <h2 class="h2 reveal"><span data-i="g.h">Played like games.</span> <span class="hl" data-i="g.h2">Shot like films.</span></h2>
+
+    <!-- CRYPTEX -->
+    <article class="game reveal" style="--acc:#ff4d3d">
+      <div class="game-media" data-hover-video>
+        <img src="assets/img/cx_12.webp" alt="CRYPTEX gameplay" loading="lazy">
+        <video muted loop playsinline preload="none" data-src="assets/video/cryptex-loop.mp4"></video>
+        <div class="game-badge">LIVE ACTION · POV</div>
+        <button class="play" data-video="assets/video/cryptex-trailer.mp4" data-title="CRYPTEX — Trailer" aria-label="Play trailer"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+      </div>
+      <div class="game-body">
+        <div class="meta"><span>2020</span><span>Steam · PC</span><span data-i="g.cx.genre">Action · FMV</span></div>
+        <h3>CRYPTEX</h3>
+        <p data-i="g.cx.p">An action FMV set in Istanbul. A friend held by the mafia, a cryptex, and five crime bosses holding its ciphers. Shot entirely in first person — you are the lead of this interactive film, and six different endings depend on you.</p>
+        <ul class="feat">
+          <li data-i="g.cx.f1">Shot on location across Istanbul</li>
+          <li data-i="g.cx.f2">Full POV cinematography</li>
+          <li data-i="g.cx.f3">6 endings · timed decisions</li>
+        </ul>
+        <div class="row">
+          <a class="btn btn-red" href="https://store.steampowered.com/app/1378700/CRYPTEX" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-9.96 9.2l5.36 2.2a2.8 2.8 0 0 1 1.6-.5l2.4-3.46V9.4a3.8 3.8 0 1 1 3.8 3.8h-.08l-3.42 2.44a2.83 2.83 0 0 1-5.6.56L2.3 14.6A10 10 0 1 0 12 2z"/></svg><span data-i="btn.steam">View on Steam</span></a>
+          <button class="btn btn-ghost" data-video="assets/video/cryptex-trailer.mp4" data-title="CRYPTEX — Trailer" data-i="btn.trailer">Trailer</button>
+        </div>
+      </div>
+      <div class="strip">
+        <img src="assets/img/cx_2.webp" alt="" loading="lazy"><img src="assets/img/cx_3.webp" alt="" loading="lazy"><img src="assets/img/cx_4.webp" alt="" loading="lazy"><img src="assets/img/cx_9.webp" alt="" loading="lazy"><img src="assets/img/cx_1.webp" alt="" loading="lazy">
+      </div>
+    </article>
+
+    <!-- HALF DEAD -->
+    <article class="game flip reveal" style="--acc:#9be15d">
+      <div class="game-media" data-hover-video>
+        <img src="assets/img/hd_2.webp" alt="Half Dead gameplay" loading="lazy">
+        <video muted loop playsinline preload="none" data-src="assets/video/halfdead-loop.mp4"></video>
+        <div class="game-badge">NEW · 2026</div>
+        <button class="play" data-video="assets/video/halfdead-trailer.mp4" data-title="Half Dead — Official Trailer" aria-label="Play trailer"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+      </div>
+      <div class="game-body">
+        <div class="meta"><span>2026</span><span>Steam · iOS · Android</span><span data-i="g.hd.genre">Story · Interactive FMV</span></div>
+        <h3>Half Dead <small>A Zombie Story</small></h3>
+        <p data-i="g.hd.p">In a world where humanity is fading, a zombie named Alex begins to change after he sees Sienna. Love, comedy and tragedy told through interactive cinematic scenes and living comic panels — every choice pushes Alex closer to being human, or further away.</p>
+        <ul class="feat">
+          <li data-i="g.hd.f1">Cinematic scenes + animated comic panels</li>
+          <li data-i="g.hd.f2">Branching choices, multiple endings</li>
+          <li data-i="g.hd.f3">On PC and mobile as “Full Dead”</li>
+        </ul>
+        <div class="row">
+          <a class="btn btn-green" href="https://store.steampowered.com/app/3698440/Half_Dead_A_Zombie_Story_Game" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-9.96 9.2l5.36 2.2a2.8 2.8 0 0 1 1.6-.5l2.4-3.46V9.4a3.8 3.8 0 1 1 3.8 3.8h-.08l-3.42 2.44a2.83 2.83 0 0 1-5.6.56L2.3 14.6A10 10 0 1 0 12 2z"/></svg>Steam</a>
+          <a class="btn btn-ghost" href="https://apps.apple.com/app/id6762521511" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7a4.5 4.5 0 0 0-3.6-1.9c-1.5-.2-3 .9-3.7.9-.8 0-2-.9-3.2-.8A4.8 4.8 0 0 0 4 9.6c-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8 1.5 0 1.9.8 3.2.8 1.3 0 2.2-1.2 3-2.4a10 10 0 0 0 1.3-2.8 4.3 4.3 0 0 1-2.4-4zM14 5.4A4.3 4.3 0 0 0 15 2.3a4.4 4.4 0 0 0-2.9 1.5 4.1 4.1 0 0 0-1 3 3.6 3.6 0 0 0 2.9-1.4z"/></svg>App Store</a>
+          <a class="btn btn-ghost" href="https://play.google.com/store/apps/details?id=com.halfdead.game" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M4 2.5v19l10-9.5zM15.3 13.2l2.6 2.5-11.3 6.4zM15.3 10.8 6.6 1.9l11.3 6.4zM19.3 9.2l2.5 1.4c.8.5.8 1.2 0 1.7l-2.5 1.4-2.8-2.3z"/></svg>Google Play</a>
+          <button class="btn btn-ghost" data-video="assets/video/halfdead-trailer.mp4" data-title="Half Dead — Official Trailer" data-i="btn.trailer">Trailer</button>
+        </div>
+      </div>
+      <div class="strip">
+        <img src="assets/img/hd_5.webp" alt="" loading="lazy"><img src="assets/img/hd_3.webp" alt="" loading="lazy"><img src="assets/img/hd_7.webp" alt="" loading="lazy"><img src="assets/img/hd_9.webp" alt="" loading="lazy"><img src="assets/img/hd_1.webp" alt="" loading="lazy">
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ===== REALITY LAB ===== -->
+<section class="sec lab" id="lab">
+  <div class="wrap">
+    <div class="kicker reveal">03 — <span data-i="lab.k">Reality Lab · R&amp;D</span></div>
+    <h2 class="h2 reveal"><span data-i="lab.h1">Today you choose what the camera sees.</span> <span class="hl cyan" data-i="lab.h2">Next, you direct who stands in front of it.</span></h2>
+    <p class="lead reveal" data-i="lab.p">Reality Lab is our research track. The goal: a live direction layer where a player's decision reaches a real performer, in a real place, in real time — an earpiece cue, a mark on the ground, a new line to say. The scene you see is not pre-recorded. It is happening because you chose it.</p>
+
+    <div class="lab-demo reveal" id="labDemo">
+      <div class="lab-screen">
+        <img src="assets/img/cx_12.webp" alt="Concept visualization of the live direction layer over a real scene" loading="lazy">
+        <svg class="lab-ov" viewBox="0 0 1280 720" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#38e1ff"/></marker>
+          </defs>
+          <g class="trk" id="trk1"><rect x="560" y="36" width="175" height="410" rx="6"/><text x="560" y="26">ACTOR_01 · TRACKED · 98%</text></g>
+          <g class="trk dim" id="trk2"><rect x="960" y="570" width="180" height="150" rx="6"/><text x="960" y="560">ACTOR_02 · DOWN</text></g>
+          <path class="path" id="labPath" d="M650 440 C 700 520, 820 520, 900 470" marker-end="url(#ar)"/>
+          <circle class="mark" id="labMark" cx="900" cy="470" r="18"/>
+        </svg>
+        <div class="lab-hud">
+          <span class="rec"><b></b>LIVE</span>
+          <span>LATENCY <em id="lat">112</em> ms</span>
+          <span>NODE IST-01</span>
+        </div>
+        <div class="lab-cue" id="labCue"><small data-i="lab.cueL">EARPIECE CUE → ACTOR_01</small><b id="cueText">“Hands up. Step back slowly.”</b></div>
+        <div class="lab-note" data-i="lab.note">CONCEPT VISUALIZATION · RESEARCH IN PROGRESS</div>
+      </div>
+      <div class="lab-panel">
+        <div class="lab-title" data-i="lab.pt">DIRECTOR INPUT</div>
+        <p class="dim small" data-i="lab.pp">Pick a decision. Watch it travel to the performer.</p>
+        <div class="choices" id="choices">
+          <button class="choice on" data-cue="“Hands up. Step back slowly.”" data-path="M650 440 C 700 520, 820 520, 900 470" data-mark="900,470" data-i="lab.c1">Make him surrender</button>
+          <button class="choice" data-cue="“Run for the trees — now!”" data-path="M650 440 C 560 380, 380 300, 250 200" data-mark="250,200" data-i="lab.c2">Let him run</button>
+          <button class="choice" data-cue="“Kneel. Call Dalyan. Say the job is done.”" data-path="M650 440 C 640 520, 680 600, 720 610" data-mark="720,610" data-i="lab.c3">Make the call</button>
+        </div>
+        <p class="lab-note2" data-i="lab.note">CONCEPT VISUALIZATION · RESEARCH IN PROGRESS</p>
+        <ol class="pipe">
+          <li><b>01</b><span data-i="lab.s1">Player decides</span></li>
+          <li><b>02</b><span data-i="lab.s2">Story engine resolves the branch</span></li>
+          <li><b>03</b><span data-i="lab.s3">Cue reaches the performer</span></li>
+          <li><b>04</b><span data-i="lab.s4">Camera streams the new reality back</span></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ROADMAP ===== -->
+<section class="sec road" id="roadmap">
+  <div class="wrap">
+    <div class="kicker reveal">04 — <span data-i="r.k">Roadmap</span></div>
+    <h2 class="h2 reveal"><span data-i="r.h1">From the frame</span> <span class="hl cyan" data-i="r.h2">to the real world.</span></h2>
+    <div class="spectrum reveal" aria-hidden="true"><span>FMV</span><i></i><span>REAL</span></div>
+    <div class="timeline">
+      <div class="step done reveal">
+        <div class="step-y">2020</div>
+        <div class="step-c"><em data-i="r.shipped">Shipped</em><h4 data-i="r.1h">Live-action FMV</h4><p data-i="r.1p">CRYPTEX — first-person interactive film shot on the streets of Istanbul. Branching script, six endings.</p></div>
+      </div>
+      <div class="step done reveal">
+        <div class="step-y">2026</div>
+        <div class="step-c"><em data-i="r.shipped">Shipped</em><h4 data-i="r.2h">Hybrid cinematic storytelling</h4><p data-i="r.2p">Half Dead — cinematic scenes and living comic panels, one story across PC, iOS and Android.</p></div>
+      </div>
+      <div class="step now reveal">
+        <div class="step-y" data-i="r.now">Now</div>
+        <div class="step-c"><em data-i="r.research">In research</em><h4 data-i="r.3h">Adaptive scenes</h4><p data-i="r.3p">Scenes that react to how you play, not only what you pick: pacing, tension and dialogue that follow the player.</p></div>
+      </div>
+      <div class="step next reveal">
+        <div class="step-y" data-i="r.next">Next</div>
+        <div class="step-c"><em data-i="r.proto">Prototype</em><h4 data-i="r.4h">Live direction layer</h4><p data-i="r.4p">Player decisions routed to performers on set in real time. The audience stops watching a film and starts directing one.</p></div>
+      </div>
+      <div class="step far reveal">
+        <div class="step-y" data-i="r.hor">Horizon</div>
+        <div class="step-c"><em data-i="r.vision">Vision</em><h4 data-i="r.5h">Directing reality</h4><p data-i="r.5p">Real characters, real places, real time. Stories that happen in the world around you — and you hold the script.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section class="sec contact" id="contact">
+  <video class="contact-bg" autoplay muted loop playsinline preload="none" poster="assets/img/cx_1.webp"><source src="assets/video/hero.mp4" type="video/mp4"></video>
+  <div class="contact-in wrap">
+    <div class="kicker reveal">05 — <span data-i="c.k">Contact</span></div>
+    <h2 class="h2 big reveal"><span data-i="c.h1">Let's shoot</span> <span class="hl" data-i="c.h2">the next scene.</span></h2>
+    <p class="lead reveal" data-i="c.p">Publishers, investors, actors, filmmakers and technology partners — we would love to hear from you.</p>
+    <div class="cards">
+      <a class="ccard reveal" href="mailto:info@karayelgames.me?subject=Partnership"><b data-i="c.a">Partnership &amp; investment</b><span data-i="c.ad">Co-production, publishing, funding</span></a>
+      <a class="ccard reveal" href="mailto:info@karayelgames.me?subject=Casting"><b data-i="c.b">Casting &amp; crew</b><span data-i="c.bd">Actors, DoPs, stunt and sound</span></a>
+      <a class="ccard reveal" href="mailto:info@karayelgames.me?subject=Press"><b data-i="c.c">Press &amp; creators</b><span data-i="c.cd">Keys, assets, interviews</span></a>
+    </div>
+    <a class="mail reveal" href="mailto:info@karayelgames.me">info@karayelgames.me<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <a class="logo" href="#top"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M18 14v36M18 32 44 14M24 28l22 22" stroke="currentColor" stroke-width="6" stroke-linecap="round" fill="none"/><circle cx="48" cy="16" r="4" class="logo-dot"/></svg><span>KARAYEL<em>GAMES</em></span></a>
+    <div class="foot-l">
+      <a href="https://store.steampowered.com/app/1378700/CRYPTEX" target="_blank" rel="noopener">CRYPTEX</a>
+      <a href="https://store.steampowered.com/app/3698440/Half_Dead_A_Zombie_Story_Game" target="_blank" rel="noopener">Half Dead</a>
+      <a href="https://apps.apple.com/app/id6762521511" target="_blank" rel="noopener">Full Dead · iOS</a>
+      <a href="https://play.google.com/store/apps/details?id=com.halfdead.game" target="_blank" rel="noopener">Full Dead · Android</a>
+    </div>
+    <p class="dim small">© <span id="yr">2026</span> Karayel Games · Istanbul · <a href="mailto:info@karayelgames.me">info@karayelgames.me</a></p>
+  </div>
+</footer>
+
+<!-- video modal -->
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="modal-in">
+    <div class="modal-h"><span id="modalTitle"></span><button id="modalX" aria-label="Close">✕</button></div>
+    <video id="modalVideo" controls playsinline preload="none"></video>
+  </div>
+</div>
+
+<script src="assets/site.js" defer></script>
 </body>
 </html>
