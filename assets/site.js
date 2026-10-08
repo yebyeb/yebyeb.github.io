@@ -69,7 +69,7 @@
   const tcTik = () => {
     const ms = performance.now() - t0, s = Math.floor(ms / 1000);
     tc.textContent = `${iki(Math.floor(s / 3600))}:${iki(Math.floor(s / 60) % 60)}:${iki(s % 60)}:${iki(Math.floor((ms % 1000) / 41.67))}`;
-    requestAnimationFrame(tcTik);
+    setTimeout(tcTik, 125);
   };
   tcTik();
 
@@ -88,8 +88,9 @@
   $$('.reveal').forEach((el, i) => { el.style.transitionDelay = `${(i % 4) * 70}ms`; io.observe(el); });
 
   /* ---------- hero parallax ---------- */
+  /* görünmeyen açılış videosu durur — kaydırırken iş yükü kalmasın */
   const hv = $('#heroVideo');
-  if (!azHareket) addEventListener('scroll', () => { if (scrollY < innerHeight) hv.style.translate = `0 ${scrollY * .25}px`; }, { passive: true });
+  new IntersectionObserver(([e]) => { if (e.isIntersecting) hv.play().catch(() => {}); else hv.pause(); }).observe(hv);
 
   /* ---------- drawn ↔ filmed ---------- */
   const cmp = $('#compare');
