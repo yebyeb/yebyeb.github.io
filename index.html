@@ -3,173 +3,313 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karayel Games | Independent Game Studio</title>
+    <title>Karayel Games | Independent Game Development Studio</title>
     <style>
         :root {
-            --bg-color: #0b0f19;
-            --card-bg: #131b2e;
-            --accent-color: #38bdf8;
+            --bg-deep: #020617;
+            --bg-card: rgba(15, 23, 42, 0.75);
+            --accent-blue: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.25);
+            --border-color: rgba(255, 255, 255, 0.08);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --border-color: #1e293b;
         }
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
         }
+
+        /* Sinematik Arka Plan Işık Efekti */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1000px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.18) 0%, rgba(2, 6, 23, 0) 70%);
+            z-index: -1;
+        }
+
         header {
             text-align: center;
-            padding: 80px 20px 40px 20px;
-            max-width: 800px;
+            padding: 100px 20px 60px 20px;
+            max-width: 900px;
         }
+
+        .studio-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--accent-blue);
+            background: rgba(56, 189, 248, 0.08);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            padding: 8px 18px;
+            border-radius: 30px;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
         h1 {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            letter-spacing: 3px;
-            background: linear-gradient(to right, #38bdf8, #818cf8);
+            font-size: 3.8rem;
+            margin-bottom: 20px;
+            letter-spacing: 6px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 30%, #64748b 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
         .vision {
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             color: var(--text-muted);
-            line-height: 1.7;
-            margin-bottom: 40px;
+            line-height: 1.8;
+            max-width: 750px;
+            margin: 0 auto;
         }
+
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             width: 90%;
-            margin-bottom: 60px;
+            margin-bottom: 100px;
         }
-        h2 {
-            font-size: 1.5rem;
-            margin-bottom: 25px;
+
+        .section-title {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 35px;
+            color: #64748b;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
-            color: var(--text-main);
+            padding-bottom: 15px;
+            font-weight: 700;
         }
+
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
         }
+
         .card {
-            background-color: var(--card-bg);
+            background-color: var(--bg-card);
+            backdrop-filter: blur(12px);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 24px;
+            border-radius: 20px;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: transform 0.2s, border-color 0.2s;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
+
         .card:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent-color);
+            transform: translateY(-8px);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px var(--accent-glow);
         }
+
+        /* Video/Medya Alanı */
+        .card-media {
+            width: 100%;
+            height: 200px;
+            background: #090d16;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .card-media iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .media-placeholder {
+            color: #475569;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .card-content {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .platform-tag {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: rgba(30, 41, 59, 0.8);
+            color: var(--accent-blue);
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-weight: 700;
+            align-self: flex-start;
+            margin-bottom: 15px;
+        }
+
         .card h3 {
-            margin-top: 0;
-            font-size: 1.25rem;
+            margin: 0 0 12px 0;
+            font-size: 1.5rem;
             color: #ffffff;
+            font-weight: 700;
         }
+
         .card p {
             color: var(--text-muted);
             font-size: 0.95rem;
-            line-height: 1.5;
-            margin-bottom: 20px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            flex-grow: 1;
         }
-        .platform-tag {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            background: #1e293b;
-            color: #38bdf8;
-            padding: 4px 8px;
-            border-radius: 4px;
-            align-self: flex-start;
-            margin-bottom: 12px;
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: auto;
         }
+
         .btn {
-            background-color: #2563eb;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
             color: white;
-            padding: 10px 16px;
-            border-radius: 6px;
+            padding: 12px 20px;
+            border-radius: 10px;
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 0.9rem;
             text-align: center;
-            transition: background 0.2s;
+            transition: all 0.2s ease;
+            display: inline-block;
+            flex: 1;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
         }
+
         .btn:hover {
-            background-color: #1d4ed8;
+            opacity: 0.92;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
         }
+
+        .btn-alt {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: none;
+        }
+
+        .btn-alt:hover {
+            background: rgba(51, 65, 85, 0.9);
+            box-shadow: none;
+        }
+
         footer {
             margin-top: auto;
-            padding: 30px;
+            padding: 50px 20px;
             text-align: center;
             color: #475569;
             font-size: 0.9rem;
             border-top: 1px solid var(--border-color);
             width: 100%;
+            background: rgba(2, 6, 23, 0.8);
         }
+
         footer a {
             color: var(--text-muted);
             text-decoration: none;
+            transition: color 0.2s;
         }
+
         footer a:hover {
-            color: var(--accent-color);
+            color: var(--accent-blue);
         }
     </style>
 </head>
 <body>
 
     <header>
+        <div class="studio-badge">
+            <span style="width: 8px; height: 8px; background: #38bdf8; border-radius: 50%; display: inline-block; box-shadow: 0 0 10px #38bdf8;"></span>
+            Independent Game Studio
+        </div>
         <h1>KARAYEL GAMES</h1>
         <p class="vision">
-            Bridging the gap between gaming and reality. At Karayel Games, our vision is to dissolve the boundaries of traditional simulation, presenting real-world mechanics and immersive narratives through the lens of interactive art.
+            Bridging the gap between gaming and reality. We dissolve traditional simulation boundaries, presenting immersive narratives, tactical survival mechanics, and deep psychological puzzles through the lens of interactive art.
         </p>
     </header>
 
     <div class="container">
-        <h2>Our Portfolio</h2>
+        <div class="section-title">Released Titles & Projects</div>
         <div class="grid">
             
             <!-- Half Dead -->
             <div class="card">
-                <div>
-                    <span class="platform-tag">Steam</span>
-                    <h3>Half Dead: A Zombie Story</h3>
-                    <p>Dive into a tense survival thriller where every choice matters in a desolate, post-apocalyptic world.</p>
+                <div class="card-media">
+                    <span class="media-placeholder">Half Dead : Trailer Preview</span>
+                    <!-- İleride buraya oyunun Youtube video embed kodunu koyabilirsin: 
+                    <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe> -->
                 </div>
-                <a href="https://store.steampowered.com/app/3698440/Half_Dead_A_Zombie_Story_Game" target="_blank" class="btn">View on Steam</a>
+                <div class="card-content">
+                    <span class="platform-tag">Steam &bull; PC</span>
+                    <h3>Half Dead: A Zombie Story</h3>
+                    <p>A tense post-apocalyptic survival thriller where scarce resources, atmospheric dread, and critical choices dictate your survival in a desolate wasteland.</p>
+                    <div class="btn-group">
+                        <a href="https://store.steampowered.com/app/3698440/Half_Dead_A_Zombie_Story_Game" target="_blank" class="btn">View on Steam</a>
+                    </div>
+                </div>
             </div>
 
             <!-- CRYPTEX -->
             <div class="card">
-                <div>
-                    <span class="platform-tag">Steam</span>
-                    <h3>CRYPTEX</h3>
-                    <p>An intricate puzzle experience designed to challenge your intellect and decode hidden mysteries.</p>
+                <div class="card-media">
+                    <span class="media-placeholder">Cryptex : Gameplay Teaser</span>
                 </div>
-                <a href="https://store.steampowered.com/app/1378700/CRYPTEX" target="_blank" class="btn">View on Steam</a>
+                <div class="card-content">
+                    <span class="platform-tag">Steam &bull; PC</span>
+                    <h3>CRYPTEX</h3>
+                    <p>An intricate, multi-layered puzzle experience engineered to test high-level intellect, logic deduction, and the decoding of deeply hidden corporate mysteries.</p>
+                    <div class="btn-group">
+                        <a href="https://store.steampowered.com/app/1378700/CRYPTEX" target="_blank" class="btn">View on Steam</a>
+                    </div>
+                </div>
             </div>
 
             <!-- Full Dead Mobile -->
             <div class="card">
-                <div>
-                    <span class="platform-tag">iOS & Android</span>
-                    <h3>Full Dead: Bir Zombi Hikayesi</h3>
-                    <p>Take the survival experience on the go. Available now across mobile platforms.</p>
+                <div class="card-media">
+                    <span class="media-placeholder">Full Dead : Mobile Showcase</span>
                 </div>
-                <div style="display: flex; gap: 10px;">
-                    <a href="https://apps.apple.com/tr/app/full-dead-bir-zombi-hikayesi/id6762521511" target="_blank" class="btn" style="flex:1; font-size:0.85rem;">App Store</a>
-                    <a href="https://play.google.com/store/apps/details?id=com.halfdead.game" target="_blank" class="btn" style="flex:1; font-size:0.85rem; background-color:#059669;">Google Play</a>
+                <div class="card-content">
+                    <span class="platform-tag">iOS & Android &bull; Mobile</span>
+                    <h3>Full Dead: Bir Zombi Hikayesi</h3>
+                    <p>Take the gritty survival narrative anywhere you go. Fully optimized mobile survival experience engineered for smooth performance across both iOS and Android ecosystems.</p>
+                    <div class="btn-group">
+                        <a href="https://apps.apple.com/tr/app/full-dead-bir-zombi-hikayesi/id6762521511" target="_blank" class="btn btn-alt">App Store</a>
+                        <a href="https://play.google.com/store/apps/details?id=com.halfdead.game" target="_blank" class="btn">Google Play</a>
+                    </div>
                 </div>
             </div>
 
@@ -177,7 +317,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2026 Karayel Games. All rights reserved. | <a href="mailto:info@karayelgames.me">info@karayelgames.me</a></p>
+        <p>&copy; 2026 Karayel Games. All rights reserved. &bull; <a href="mailto:info@karayelgames.me">info@karayelgames.me</a></p>
     </footer>
 
 </body>
