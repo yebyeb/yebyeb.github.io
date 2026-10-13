@@ -48,8 +48,6 @@ svg { fill: currentColor; }
   padding: calc(14px + env(safe-area-inset-top)) clamp(16px, 4vw, 48px) 14px; transition: background .4s, backdrop-filter .4s, padding .4s; }
 .nav.solid { background: rgba(6, 6, 8, .92); border-bottom: 1px solid var(--line); }
 .logo { display: inline-flex; align-items: center; gap: 10px; font: 800 1rem/1 var(--disp); letter-spacing: .14em; }
-.logo svg { width: 30px; height: 30px; color: var(--ink); }
-.logo-dot { fill: var(--cyan); filter: drop-shadow(0 0 6px var(--cyan)); }
 .logo em { font-style: normal; color: var(--red); margin-left: .35em; }
 .links { display: flex; gap: 28px; white-space: nowrap; font-size: .9rem; color: #d6d4dd; }
 .links a { position: relative; padding: 6px 0; }
@@ -307,7 +305,6 @@ svg { fill: currentColor; }
 @media (max-width: 560px) {
   .nav { gap: 10px; }
   .logo { font-size: .8rem; letter-spacing: .08em; gap: 8px; }
-  .logo svg { width: 26px; height: 26px; }
   .nav-r { gap: 8px; }
   .eyebrow { font-size: .62rem; letter-spacing: .16em; }
   .tag { font-size: .58rem; padding: 5px 9px; top: 10px; }
