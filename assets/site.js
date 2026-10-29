@@ -51,6 +51,7 @@
     'm.more': 'Oyun hakkında', 'm.privacy': 'Gizlilik', 'm.terms': 'Koşullar', 'm.support': 'Destek',
   };
   const CUE_TR = ['“Ellerini kaldır. Yavaşça geri çekil.”', '“Ağaçlara koş — hemen!”', '“Diz çök. Dalyan’ı ara. İşin bittiğini söyle.”'];
+  if (azHareket) $$('.mcard-hero video').forEach((v) => { v.removeAttribute('autoplay'); v.pause(); });
   const EN = {};
   $$('[data-i]').forEach((el) => { EN[el.dataset.i] = el.textContent; });
   let dil = 'en';
@@ -61,6 +62,7 @@
     const S = dil === 'tr' ? TR : EN;
     $$('[data-i]').forEach((el) => { const v = S[el.dataset.i] ?? EN[el.dataset.i]; if (v != null) el.textContent = v; });
     document.documentElement.lang = dil;
+    $$('[data-lsrc]').forEach((el) => { const l = dil === 'tr' ? 'tr' : 'en'; const dar = el.dataset.darSrc && matchMedia('(max-width: 560px)').matches; const v = (dar ? el.dataset.darSrc : el.dataset.lsrc).replace('{l}', l); if (el.getAttribute('src') === v) return; const po = dar ? el.dataset.darPoster : el.dataset.lposter; if (po) el.poster = po.replace('{l}', l); el.src = v; if (el.tagName === 'VIDEO' && !azHareket) el.play().catch(() => {}); });
     $('#lang').innerHTML = dil === 'tr' ? '<b>TR</b><i>EN</i>' : '<i>TR</i><b>EN</b>';
     $$('.glitch').forEach((g) => { g.dataset.text = g.textContent; });
     $$('.choice').forEach((b, i) => { b.dataset.cueNow = dil === 'tr' ? CUE_TR[i] : b.dataset.cue; });
