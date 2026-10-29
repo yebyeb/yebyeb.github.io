@@ -331,3 +331,40 @@ svg { fill: currentColor; }
 .lang { display: inline-flex; gap: 6px; }
 .lang i { font-style: normal; opacity: .45; }
 .lang b { color: var(--red); font-weight: 600; }
+
+/* ===== MOBILE GAMES (2026-10) — one .mcard per title ===== */
+.mob { margin-top: 110px; padding-top: 56px; border-top: 1px solid var(--line); }
+.mob-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 24px 48px; align-items: end; }
+.mob-head .kicker { margin: 0; color: #b49cff; }
+.mob-lead { color: var(--dim); font-size: 1.05rem; max-width: 46ch; }
+.mob-grid { display: grid; gap: 28px; margin-top: 40px; }
+.mcard { --acc: #b49cff; display: grid; grid-template-columns: 1fr 1.1fr; align-items: center; border-radius: 26px; overflow: hidden; position: relative;
+  background: radial-gradient(120% 90% at 0% 100%, color-mix(in srgb, var(--acc) 16%, transparent), transparent 60%), linear-gradient(160deg, rgba(255,255,255,.045), rgba(255,255,255,.012));
+  border: 1px solid var(--line); }
+.mcard-shots { position: relative; height: 100%; min-height: 440px; display: flex; justify-content: center; align-items: flex-end; padding: 44px 24px 0; }
+.mcard-shots img { width: 31%; max-width: 190px; border-radius: 14px 14px 0 0; box-shadow: 0 30px 60px -20px rgba(0,0,0,.9); transition: transform 1s var(--ease); }
+.mcard-shots img:nth-child(1) { transform: translate(14%, 6%) rotate(-5deg); }
+.mcard-shots img:nth-child(2) { position: relative; z-index: 2; width: 36%; max-width: 220px; }
+.mcard-shots img:nth-child(3) { transform: translate(-14%, 10%) rotate(4deg); }
+.mcard:hover .mcard-shots img:nth-child(1) { transform: translate(6%, 3%) rotate(-7deg); }
+.mcard:hover .mcard-shots img:nth-child(3) { transform: translate(-6%, 6%) rotate(6deg); }
+.mcard-body { padding: clamp(28px, 4vw, 48px); }
+.mcard-id { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
+.mcard-id img { width: 64px; height: 64px; border-radius: 15px; box-shadow: 0 8px 24px -8px rgba(0,0,0,.8); }
+.mcard-id h3 { font: 800 clamp(1.8rem, 3.4vw, 2.6rem)/1 var(--disp); letter-spacing: -.02em; }
+.mcard-sub { display: block; margin-top: 4px; font: 500 .72rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--dim); }
+.mcard p { color: #cfccd6; margin-top: 18px; }
+.btn-violet { background: var(--acc, #b49cff); color: #140d24; box-shadow: 0 10px 30px -12px rgba(180, 156, 255, .8); }
+.btn-violet:hover { transform: translateY(-2px); }
+.mcard-legal { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 22px; font-size: .82rem; }
+.mcard-legal a { color: var(--dim); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255,255,255,.2); }
+.mcard-legal a:hover { color: var(--ink); }
+@media (max-width: 1040px) {
+  .mob { margin-top: 80px; }
+  .mob-head { grid-template-columns: 1fr; gap: 12px; }
+  .mcard { grid-template-columns: 1fr; }
+  .mcard-shots { min-height: 0; height: auto; padding-top: 32px; }
+}
+@media (max-width: 560px) {
+  .mcard-legal a { padding: 10px 0; }
+}

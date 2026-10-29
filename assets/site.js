@@ -43,6 +43,12 @@
     'r.5h': 'Gerçekliği yönetmek', 'r.5p': 'Gerçek karakterler, gerçek mekânlar, gerçek zaman. Etrafındaki dünyada yaşanan hikâyeler — ve senaryo senin elinde.',
     'c.k': 'İletişim', 'c.h1': 'Sıradaki sahneyi', 'c.h2': 'birlikte çekelim.', 'c.p': 'Yayıncılar, yatırımcılar, oyuncular, film yapımcıları ve teknoloji ortakları — sizden haber almak isteriz.',
     'c.a': 'Ortaklık ve yatırım', 'c.ad': 'Ortak yapım, yayıncılık, fon', 'c.b': 'Oyuncu ve ekip', 'c.bd': 'Oyuncular, görüntü yönetmenleri, dublör ve ses', 'c.c': 'Basın ve içerik üreticileri', 'c.cd': 'Anahtar, materyal, röportaj',
+    'nav.mobile': 'Mobil',
+    'm.k': 'Mobil oyunlar', 'm.lead': 'Otobüste, sırada, uyumadan önceki son on dakikada oynanan kısa bulmacalar. Aynı stüdyo, daha küçük ekran.',
+    'm.ol.sub': 'Kelime Merdiveni', 'm.ol.genre': 'Kelime bulmacası',
+    'm.ol.p': 'Her adımda tek bir harfi değiştirerek bir kelimeden ötekine git — her adım gerçek bir kelime olmalı. KAR → KUR → KUŞ. Kolay başlar; birkaç bölüm sonra kendini doğru kelimeyi ararken bulursun.',
+    'm.ol.f1': '10 dil, her birinin kendi kelime listesi', 'm.ol.f2': 'Binlerce seviye ve günlük bulmaca', 'm.ol.f3': 'Bir kelimeye dokun, anlamını gör',
+    'm.more': 'Oyun hakkında', 'm.privacy': 'Gizlilik', 'm.terms': 'Koşullar', 'm.support': 'Destek',
   };
   const CUE_TR = ['“Ellerini kaldır. Yavaşça geri çekil.”', '“Ağaçlara koş — hemen!”', '“Diz çök. Dalyan’ı ara. İşin bittiğini söyle.”'];
   const EN = {};
