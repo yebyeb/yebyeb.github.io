@@ -51,7 +51,6 @@
     'm.more': 'Oyun hakkında', 'm.privacy': 'Gizlilik', 'm.terms': 'Koşullar', 'm.support': 'Destek',
   };
   const CUE_TR = ['“Ellerini kaldır. Yavaşça geri çekil.”', '“Ağaçlara koş — hemen!”', '“Diz çök. Dalyan’ı ara. İşin bittiğini söyle.”'];
-  if (azHareket) $$('.mcard-hero video').forEach((v) => { v.removeAttribute('autoplay'); v.pause(); });
   const EN = {};
   $$('[data-i]').forEach((el) => { EN[el.dataset.i] = el.textContent; });
   let dil = 'en';
@@ -62,7 +61,7 @@
     const S = dil === 'tr' ? TR : EN;
     $$('[data-i]').forEach((el) => { const v = S[el.dataset.i] ?? EN[el.dataset.i]; if (v != null) el.textContent = v; });
     document.documentElement.lang = dil;
-    $$('[data-lsrc]').forEach((el) => { const l = dil === 'tr' ? 'tr' : 'en'; const dar = el.dataset.darSrc && matchMedia('(max-width: 560px)').matches; const v = (dar ? el.dataset.darSrc : el.dataset.lsrc).replace('{l}', l); if (el.getAttribute('src') === v) return; const po = dar ? el.dataset.darPoster : el.dataset.lposter; if (po) el.poster = po.replace('{l}', l); el.src = v; if (el.tagName === 'VIDEO' && !azHareket) el.play().catch(() => {}); });
+    $$('[data-lsrc]').forEach((el) => { const l = dil === 'tr' ? 'tr' : 'en'; const dar = el.dataset.darSrc && matchMedia('(max-width: 560px)').matches; const v = (dar ? el.dataset.darSrc : el.dataset.lsrc).replace('{l}', l); if (el.getAttribute('src') === v) return; const po = dar ? el.dataset.darPoster : el.dataset.lposter; if (po) el.poster = po.replace('{l}', l); el.src = v; if (el.tagName === 'VIDEO' && el.dataset.gorunur) el.play().catch(() => {}); });
     $('#lang').innerHTML = dil === 'tr' ? '<b>TR</b><i>EN</i>' : '<i>TR</i><b>EN</b>';
     $$('.glitch').forEach((g) => { g.dataset.text = g.textContent; });
     $$('.choice').forEach((b, i) => { b.dataset.cueNow = dil === 'tr' ? CUE_TR[i] : b.dataset.cue; });
@@ -99,6 +98,11 @@
   /* görünmeyen açılış videosu durur — kaydırırken iş yükü kalmasın */
   const hv = $('#heroVideo');
   new IntersectionObserver(([e]) => { if (e.isIntersecting) hv.play().catch(() => {}); else hv.pause(); }).observe(hv);
+
+  /* mobil oyun kartının döngü videosu: açılış videosu gibi görünürken oynar, görünmezken durur */
+  $$('.mcard-hero video').forEach((v) => new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) { v.dataset.gorunur = '1'; v.play().catch(() => {}); } else { delete v.dataset.gorunur; v.pause(); }
+  }, { threshold: .2 }).observe(v));
 
   /* ---------- drawn ↔ filmed ---------- */
   const cmp = $('#compare');
