@@ -28,6 +28,7 @@
 <meta property="og:type" content="website">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "MobileApplication", "name": "OneLet: Word Ladder", "alternateName": "OneLet", "description": "Change one letter at a time; every step has to be a real word. A word ladder puzzle game in 10 languages with a daily puzzle.", "applicationCategory": "GameApplication", "applicationSubCategory": "Word puzzle", "operatingSystem": "iOS, Android", "url": "https://karayelgames.me/onelet/", "image": "https://karayelgames.me/onelet-legal/icon.png", "inLanguage": ["en", "tr", "de", "es", "fr", "it", "nl", "pl", "pt", "ru"], "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Organization", "name": "Karayel Games", "url": "https://karayelgames.me/"}, "publisher": {"@type": "Organization", "name": "Karayel Games", "url": "https://karayelgames.me/"}, "downloadUrl": ["https://apps.apple.com/app/id6805576358", "https://play.google.com/store/apps/details?id=com.yeb.onelet"], "sameAs": ["https://apps.apple.com/app/id6805576358", "https://play.google.com/store/apps/details?id=com.yeb.onelet"]}</script>
 <link rel="preload" as="image" href="simge-480.webp">
+<link rel="preload" as="image" href="zemin.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
@@ -47,9 +48,13 @@
     font-family: Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
     font-optical-sizing: auto; text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    background: transparent;
+  }
+  body::before { /* simgenin sahnesi: mor gök, ışınlar, dağlar, çamlar — yazı okunsun diye üst ve alt koyulaşır */
+    content: ""; position: fixed; inset: 0; z-index: -1;
     background:
-      radial-gradient(60vmax 60vmax at 50% 44%, rgb(var(--mor) / .55) 0%, rgb(var(--mor) / .18) 38%, transparent 70%),
-      var(--zemin);
+      linear-gradient(180deg, rgb(9 7 13 / .72) 0%, rgb(9 7 13 / .42) 26%, rgb(9 7 13 / .05) 46%, rgb(9 7 13 / .1) 62%, rgb(9 7 13 / .6) 100%),
+      url(zemin.webp) center 40% / cover no-repeat, var(--zemin);
   }
   main {
     min-height: 100svh; display: grid; align-content: center; justify-items: center; text-align: center;
@@ -57,7 +62,8 @@
     gap: 0;
   }
   h1 { margin: 0; font-size: 34px; font-weight: 700; letter-spacing: -.025em; line-height: 1.1; }
-  .ad { margin: 10px 0 0; font-size: 18px; font-weight: 500; letter-spacing: -.01em; color: var(--soluk); }
+  .ad { margin: 10px 0 0; font-size: 18px; font-weight: 500; letter-spacing: -.01em; color: #ece6f7; }
+  h1, .ad { text-shadow: 0 2px 14px rgb(9 7 13 / .55); }
 
   /* simge: videodaki gibi buzlu camın içinden belirir */
   .sahne { position: relative; width: min(64vw, 260px); aspect-ratio: 1; margin: 34px 0 40px; }
@@ -69,7 +75,7 @@
   .simge, .cam { position: absolute; inset: 0; border-radius: 23%; }
   .simge {
     width: 100%; height: 100%; display: block;
-    box-shadow: 0 18px 50px rgb(0 0 0 / .55), 0 0 0 1px rgb(255 255 255 / .08);
+    box-shadow: 0 22px 60px rgb(9 7 13 / .7), 0 0 0 1.5px rgb(255 255 255 / .28);
     animation: belir 1.5s .35s cubic-bezier(.2,.7,.2,1) both;
   }
   .cam {
