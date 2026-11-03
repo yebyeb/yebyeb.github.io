@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OneLet — Word Ladder</title>
+<meta name="description" content="Change one letter at a time. Every step has to be a real word. Free on iPhone and Android, in 10 languages.">
+<meta name="theme-color" content="#121733">
+<meta property="og:title" content="OneLet — Word Ladder">
+<meta property="og:description" content="Change one letter at a time. Every step has to be a real word.">
+<meta property="og:image" content="https://karayelgames.me/onelet-legal/icon.png">
+<meta property="og:url" content="https://karayelgames.me/onelet/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="simge.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gece: #121733;      /* oyunun gece göğü, üst */
+    --alacakaranlik: #2b2c4d; /* ufka doğru */
+    --inci: #eef1f7;      /* cam harf dairesi */
+    --murekkep: #1d2340;  /* daire içindeki harf */
+    --isik: #8fb4ff;      /* değişen harf — oyunda nişan alınan harfin mavisi */
+    --yazi: #e9ecf6;
+    --soluk: #a9afcb;
+    --disk: 46px;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--gece); }
+  body {
+    margin: 0; min-height: 100svh; color: var(--yazi);
+    font: 600 16px/1.45 Nunito, system-ui, sans-serif;
+    background: linear-gradient(180deg, var(--gece) 0%, #191e3f 55%, var(--alacakaranlik) 100%) fixed;
+    -webkit-font-smoothing: antialiased;
+  }
+  main {
+    min-height: 100svh; max-width: 980px; margin: 0 auto;
+    padding: max(28px, env(safe-area-inset-top)) 16px max(20px, env(safe-area-inset-bottom));
+    display: grid; grid-template-columns: 1fr; align-content: center; gap: 28px;
+  }
+  .sol { display: grid; justify-items: center; text-align: center; gap: 22px; }
+
+  /* künye: simge + ad, sola yaslı tek satır — kart başlığı değil, imza */
+  .kunye { display: flex; align-items: center; gap: 14px; }
+  .kunye img { width: 60px; height: 60px; border-radius: 15px; display: block; box-shadow: 0 6px 18px rgb(0 0 0 / .35); }
+  .kunye h1 { margin: 0; font-weight: 900; font-size: 30px; line-height: 1; letter-spacing: -.01em; }
+  .kunye p { margin: 4px 0 0; color: var(--soluk); font-size: 15px; text-align: left; }
+
+  /* merdiven: oyunun kendi tahtası gibi — inci daireler, değişen harf mavi */
+  .merdiven { display: grid; gap: 10px; padding: 4px 0; min-height: calc(var(--satir, 4) * var(--disk) + (var(--satir, 4) - 1) * 10px); align-content: start; }
+  .satir { display: flex; justify-content: center; gap: 8px; }
+  .satir.yeni { animation: in .5s cubic-bezier(.2,.8,.3,1) both; }
+  .harf {
+    width: var(--disk); height: var(--disk); border-radius: 50%;
+    display: grid; place-items: center;
+    font-weight: 900; font-size: 23px; color: var(--murekkep);
+    background: radial-gradient(circle at 35% 30%, #fff 0%, var(--inci) 55%, #cdd3e4 100%);
+    box-shadow: inset 0 -2px 3px rgb(0 0 0 / .12), 0 3px 8px rgb(0 0 0 / .3);
+  }
+  .harf.degisti {
+    color: #0f1a3d;
+    background: radial-gradient(circle at 35% 30%, #e9f0ff 0%, var(--isik) 60%, #6d95ea 100%);
+    box-shadow: 0 0 0 3px rgb(143 180 255 / .35), 0 3px 8px rgb(0 0 0 / .3);
+  }
+  .satir.solgun .harf { opacity: .38; }
+  @keyframes in { from { opacity: 0; transform: translateY(-8px); } }
+
+  .cumle { margin: 0; max-width: 30ch; font-size: 18px; line-height: 1.4; color: var(--yazi); }
+
+  /* rozetler: resmî görseller, değiştirilmeden; görünen yükseklikleri eşit */
+  .magazalar { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .rozet { display: block; height: 58px; overflow: hidden; border-radius: 10px; transition: transform .15s; }
+  .rozet:active { transform: scale(.97); }
+  .rozet:focus-visible { outline: 3px solid var(--isik); outline-offset: 3px; }
+  .rozet img { display: block; height: 100%; }
+  .rozet.gp img { height: auto; }
+  .not { margin: 0; color: var(--soluk); font-size: 14px; max-width: 34ch; }
+
+  .ekran { display: none; }
+  .ekran img { display: block; width: 100%; height: auto; border-radius: 28px; box-shadow: 0 24px 60px rgb(0 0 0 / .45); }
+
+  footer { text-align: center; font-size: 13px; color: var(--soluk); display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  footer a { color: inherit; text-decoration: none; padding: 6px 0; }
+  footer a:hover { color: var(--yazi); text-decoration: underline; }
+
+  @media (max-height: 700px) { :root { --disk: 40px; } .harf { font-size: 20px; } main { gap: 20px; } .sol { gap: 16px; } }
+  @media (min-width: 860px) {
+    main { grid-template-columns: minmax(0, 1fr) 340px; gap: 64px; align-items: center; }
+    .sol { justify-items: start; text-align: left; }
+    .merdiven .satir { justify-content: flex-start; }
+    .magazalar { flex-direction: row; }
+    .ekran { display: block; }
+    footer { grid-column: 1 / -1; }
+    :root { --disk: 52px; }
+    .harf { font-size: 26px; }
+    .cumle { font-size: 20px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .satir.yeni { animation: none; } }
+</style>
+</head>
+<body>
+<main>
+  <section class="sol">
+    <div class="kunye">
+      <img src="simge.webp" alt="" width="60" height="60">
+      <div><h1>OneLet</h1><p id="alt">Word Ladder</p></div>
+    </div>
+
+    <div class="merdiven" id="merdiven" role="img" aria-label=""></div>
+
+    <p class="cumle" id="cumle">Change one letter at a time. Every step has to be a real word.</p>
+
+    <div class="magazalar" id="magazalar">
+      <a class="rozet as" id="as" href="https://apps.apple.com/app/id6805576358" rel="noopener"><img id="as-img" src="rozet/as-en.svg" alt="Download on the App Store"></a>
+      <a class="rozet gp" id="gp" href="https://play.google.com/store/apps/details?id=com.yeb.onelet" rel="noopener"><img id="gp-img" src="rozet/gp-en.png" alt="Get it on Google Play"></a>
+    </div>
+
+    <p class="not" id="not">Free to play, in 10 languages, with a new puzzle every day.</p>
+  </section>
+
+  <figure class="ekran" style="margin:0"><img id="ekran" src="ekran/en.webp" alt="" width="540" height="960" loading="lazy"></figure>
+
+  <footer>
+    <a href="../onelet-legal/privacy.html" data-y="0">Privacy</a>
+    <a href="../onelet-legal/terms.html" data-y="1">Terms</a>
+    <a href="../onelet-legal/support.html" data-y="2">Support</a>
+    <a href="../">Karayel Games</a>
+  </footer>
+</main>
+
+<script>
+(function () {
+  // Dil: ?l= > tarayıcı dilleri > en. Metin ve merdiven o dilde.
+  var D = {
+    en: ['Word Ladder', 'Change one letter at a time. Every step has to be a real word.', 'Free to play, in 10 languages, with a new puzzle every day.', ['COLD','CORD','WORD','WARD','WARM'], 'Download on the App Store', 'Get it on Google Play'],
+    tr: ['Kelime Merdiveni', 'Her adımda tek harf değiştir. Her adım gerçek bir kelime olmalı.', 'Ücretsiz, 10 dilde, her gün yeni bir bulmacayla.', ['KIŞ','KAŞ','KAZ','YAZ'], 'App Store’dan indir', 'Google Play’den alın'],
+    de: ['Wortleiter', 'Ändere jeweils nur einen Buchstaben. Jeder Schritt muss ein echtes Wort sein.', 'Kostenlos, in 10 Sprachen, jeden Tag ein neues Rätsel.', ['WIND','WAND','HAND','HUND'], 'Laden im App Store', 'Jetzt bei Google Play'],
+    es: ['Escalera de palabras', 'Cambia una letra a la vez. Cada paso tiene que ser una palabra real.', 'Gratis, en 10 idiomas, con un acertijo nuevo cada día.', ['GATO','PATO','PASO','PESO'], 'Descargar en el App Store', 'Disponible en Google Play'],
+    fr: ['Échelle de mots', 'Change une lettre à la fois. Chaque étape doit être un vrai mot.', 'Gratuit, en 10 langues, avec une nouvelle énigme chaque jour.', ['CHAT','CHAR','CHER','CHEF'], 'Télécharger dans l’App Store', 'Disponible sur Google Play'],
+    it: ['Scala di parole', 'Cambia una lettera alla volta. Ogni passo deve essere una parola vera.', 'Gratis, in 10 lingue, con un nuovo rompicapo ogni giorno.', ['PANE','PALE','MALE','MARE'], 'Scarica su App Store', 'Disponibile su Google Play'],
+    nl: ['Woordladder', 'Verander telkens één letter. Elke stap moet een echt woord zijn.', 'Gratis, in 10 talen, met elke dag een nieuwe puzzel.', ['BOOT','BOOM','ROOM','ROOS'], 'Download in de App Store', 'Ontdek het op Google Play'],
+    pl: ['Drabina słów', 'Zmieniaj po jednej literze. Każdy krok musi być prawdziwym słowem.', 'Za darmo, w 10 językach, codziennie nowa łamigłówka.', ['KOT','KOS','NOS','NOC'], 'Pobierz z App Store', 'Pobierz z Google Play'],
+    pt: ['Escada de palavras', 'Troque uma letra por vez. Cada passo precisa ser uma palavra de verdade.', 'Grátis, em 10 idiomas, com um desafio novo todo dia.', ['MAR','MAL','SAL','SOL'], 'Baixar na App Store', 'Disponível no Google Play'],
+    ru: ['Лестница слов', 'Меняй по одной букве. Каждый шаг — настоящее слово.', 'Бесплатно, на 10 языках, каждый день новая головоломка.', ['КОТ','РОТ','РОД','ГОД'], 'Загрузите в App Store', 'Доступно в Google Play']
+  };
+  // Google rozetinin şeffaf payı (görünen alan): en eski biçim, ötekiler yeni biçim — rozet değiştirilmeden kırpılır
+  var GP = { en: [41, 41, 564, 168] }, GP_YENI = [0, 29, 646, 192];
+
+  var q = new URLSearchParams(location.search);
+  var adaylar = [q.get('l')].concat(navigator.languages || [navigator.language]);
+  var dil = 'en';
+  for (var i = 0; i < adaylar.length; i++) {
+    var k = (adaylar[i] || '').slice(0, 2).toLowerCase();
+    if (D[k]) { dil = k; break; }
+  }
+  var t = D[dil];
+  document.documentElement.lang = dil;
+  document.getElementById('alt').textContent = t[0];
+  document.getElementById('cumle').textContent = t[1];
+  document.getElementById('not').textContent = t[2];
+  document.getElementById('as-img').src = 'rozet/as-' + dil + '.svg';
+  document.getElementById('as-img').alt = t[4];
+  var gpImg = document.getElementById('gp-img');
+  gpImg.src = 'rozet/gp-' + dil + '.png'; gpImg.alt = t[5];
+  document.getElementById('ekran').src = 'ekran/' + dil + '.webp';
+  var Y = { en: ['Privacy', 'Terms', 'Support'], tr: ['Gizlilik', 'Koşullar', 'Destek'], de: ['Datenschutz', 'Bedingungen', 'Hilfe'],
+    es: ['Privacidad', 'Términos', 'Ayuda'], fr: ['Confidentialité', 'Conditions', 'Aide'], it: ['Privacy', 'Termini', 'Assistenza'],
+    nl: ['Privacy', 'Voorwaarden', 'Hulp'], pl: ['Prywatność', 'Regulamin', 'Pomoc'], pt: ['Privacidade', 'Termos', 'Ajuda'],
+    ru: ['Конфиденциальность', 'Условия', 'Поддержка'] }[dil];
+  document.querySelectorAll('[data-y]').forEach(function (a) { a.textContent = Y[+a.dataset.y]; });
+
+  // Google rozeti: görünen yükseklik App Store ile aynı (54 px); şeffaf pay taşma ile gizlenir
+  var g = GP[dil] || GP_YENI, H = 58, olcek = H / g[3];
+  var gp = document.getElementById('gp');
+  gp.style.width = Math.round(g[2] * olcek) + 'px';
+  gpImg.style.width = Math.round(646 * olcek) + 'px';
+  gpImg.style.marginLeft = -Math.round(g[0] * olcek) + 'px';
+  gpImg.style.marginTop = -Math.round(g[1] * olcek) + 'px';
+
+  // Kampanya: ?k=tiktok_tr → App Store ct + Play referrer (hangi hesap kaç indirme getirdi)
+  var PT = ''; // App Store Connect sağlayıcı kimliği (pt=), girilince kampanya ölçülür
+  var kod = (q.get('k') || '').toLowerCase();
+  var as = document.getElementById('as');
+  var pl = 'https://play.google.com/store/apps/details?id=com.yeb.onelet&hl=' + dil;
+  if (/^[a-z]{1,20}_[a-z]{2}$/.test(kod)) {
+    if (PT) as.href += '?pt=' + PT + '&ct=' + kod + '&mt=8';
+    pl += '&referrer=' + encodeURIComponent('utm_source=' + kod.split('_')[0] + '&utm_medium=sosyal&utm_campaign=' + kod);
+  }
+  document.getElementById('gp').href = pl;
+
+  // Cihaza göre sıra: Android'de Google Play üstte
+  var ua = navigator.userAgent;
+  if (/Android/i.test(ua)) { var m = document.getElementById('magazalar'); m.insertBefore(gp, as); }
+
+  // Merdiven: kelimeler sırayla gelir, değişen harf mavi yanar; sonunda baştan
+  var kel = t[3], kutu = document.getElementById('merdiven');
+  kutu.style.setProperty('--satir', kel.length);
+  kutu.setAttribute('aria-label', kel.join(' → '));
+  var yavas = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function satir(w, onceki, yeni) {
+    var s = document.createElement('div');
+    s.className = 'satir' + (yeni ? ' yeni' : '');
+    Array.from(w).forEach(function (h, j) {
+      var d = document.createElement('span');
+      d.className = 'harf' + (onceki && Array.from(onceki)[j] !== h ? ' degisti' : '');
+      d.textContent = h;
+      s.appendChild(d);
+    });
+    return s;
+  }
+  function ciz(n, yeni) {
+    kutu.innerHTML = '';
+    for (var i = 0; i < n; i++) {
+      var s = satir(kel[i], kel[i - 1], yeni && i === n - 1);
+      if (i < n - 1) s.classList.add('solgun');
+      kutu.appendChild(s);
+    }
+    if (n === kel.length) kutu.lastChild.classList.remove('solgun');
+  }
+  if (yavas) { ciz(kel.length, false); Array.from(kutu.children).forEach(function (s) { s.classList.remove('solgun'); }); return; }
+  var n = 1;
+  ciz(1, true);
+  setInterval(function () {
+    n = n >= kel.length ? 1 : n + 1;
+    ciz(n, true);
+  }, 1300);
+})();
+</script>
+</body>
+</html>
